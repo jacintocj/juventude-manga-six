@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Juventude Manga Six</title>
+</head>
+
+<body style="font-family: Arial; background:#fff5f2; padding:20px;">
+
+<h1>Igreja União Baptista de Moçambique</h1>
+<h2>Juventude Local da Manga Six</h2>
+
+<div id="login">
+  <input placeholder="Usuário" id="user"><br><br>
+  <input type="password" placeholder="Senha" id="pass"><br><br>
+  <button onclick="entrar()">Entrar</button>
+</div>
+
+<div id="sistema" style="display:none;">
+  <h3>Bem-vindo ao Sistema</h3>
+  <p id="msg"></p>
+
+  <h4>Adicionar Membro</h4>
+  <input id="nome" placeholder="Nome">
+  <input id="idade" placeholder="Idade">
+  <button onclick="add()">Adicionar</button>
+
+  <ul id="lista"></ul>
+</div>
+
+<script>
+let membros = JSON.parse(localStorage.getItem("membros")) || [];
+
+function entrar(){
+  let u = document.getElementById("user").value;
+  let p = document.getElementById("pass").value;
+
+  if(u=="admin" && p=="1234"){
+    document.getElementById("login").style.display="none";
+    document.getElementById("sistema").style.display="block";
+
+    document.getElementById("msg").innerText =
+      "JCasthaj Produção #O que Jesus faria.?!";
+  } else {
+    alert("Erro no login");
+  }
+}
+
+function add(){
+  let nome = document.getElementById("nome").value;
+  let idade = document.getElementById("idade").value;
+
+  membros.push({nome, idade});
+  localStorage.setItem("membros", JSON.stringify(membros));
+  render();
+}
+
+function render(){
+  let lista = document.getElementById("lista");
+  lista.innerHTML = "";
+  membros.forEach(m=>{
+    lista.innerHTML += `<li>${m.nome} - ${m.idade}</li>`;
+  });
+}
+
+render();
+</script>
+
+</body>
+</html>
